@@ -8,5 +8,7 @@ target 'Pizza Finder' do
   # Pods for Pizza Finder
 
 pod 'GooglePlaces'
+pod 'GoogleMaps'
+pod 'GooglePlacePicker'
 
 end

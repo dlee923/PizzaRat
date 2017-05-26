@@ -8,19 +8,24 @@
 
 import UIKit
 import CoreData
+import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let apiKey = "AIzaSyCy5RT5v2qUzOGNirGVdBDnGIaV2ix9yJo"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        GMSPlacesClient.provideAPIKey(apiKey)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = UINavigationController(rootViewController: HomescreenVC())
+        let rootView = HomescreenVC()
+        
+        window?.rootViewController = UINavigationController(rootViewController: rootView)
         
         return true
     }
