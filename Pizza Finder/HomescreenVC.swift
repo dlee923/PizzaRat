@@ -16,8 +16,13 @@ class HomescreenVC: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.view.backgroundColor = .red
         requestAuth()
-        findCurrentPlace()
+        googleSearch.executeSearch(metersRadius: 5000, isRankedByClosest: true, isRankedByType: .distance, latitude: googleSearch.nycLatitude, longitude: googleSearch.nycLongitude, keyword: "Pizza", openNow: true, type: "Restaurant")
+//        findCurrentPlace()
+//        presentSearchAutoComplete()
+//        presentResultsAutoComplete()
     }
+    
+    let googleSearch = GoogleSearch()
     
     let placesClient = GMSPlacesClient.shared()
     let locationManager = CLLocationManager()
@@ -45,5 +50,16 @@ class HomescreenVC: UIViewController {
         }
     }
     
+    let searchVC = SearchVC()
+    
+    func presentSearchAutoComplete() {
+        present(searchVC, animated: true, completion: nil)
+    }
+    
+    let resultsVC = ResultsVC()
+    
+    func presentResultsAutoComplete() {
+        present(resultsVC, animated: true, completion: nil)
+    }
 }
 
