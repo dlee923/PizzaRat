@@ -7,27 +7,41 @@
 //
 
 import Foundation
-import CoreLocation
+import GoogleMaps
 
 enum RankType: String {
     case distance = "distance"
     case location = "location"
 }
 
+enum TravelModes: String {
+    case walking = "walking"
+    case driving = "driving"
+    case bicycling = "bicycling"
+    case transit = "transit"
+}
+
+struct WayPoint {
+    var startCoordinate: CLLocationCoordinate2D
+    var endCoordinate: CLLocationCoordinate2D
+    var duration: String
+    var distance: String
+    var direction: String
+}
+
 class GoogleSearch: NSObject {
 
     let baseSearchString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+    let baseDirectionsString = "https://maps.googleapis.com/maps/api/directions/json?"
     let nycLatitude = 40.730610
     let nycLongitude = -73.935242
+    let nycLatitude2 = 40.735345
+    let nycLongitude2 = -73.9356295
     let apiKey = "AIzaSyCy5RT5v2qUzOGNirGVdBDnGIaV2ix9yJo"
     
-    func executeSearch(metersRadius: Double, isRankedByClosest: Bool, isRankedByType: RankType, latitude: Double, longitude: Double, keyword: String, openNow: Bool, type: String) -> [EstablishmentsObj] {
-//        var parameterDict: [String:Any] = ["radius":metersRadius, "rankby": isRankedByClosest, "Latitude": latitude, "Longitude": longitude]
-//        
-//        //check for nil
-//        for (key, value) in parameterDict {
-//            return value != nil
-//        }
+
+    
+    func executeSearch(metersRadius: Double, isRankedByClosest: Bool, isRankedByType: RankType, latitude: Double, longitude: Double, keyword: String, openNow: Bool, type: String) -> String {
         
         //Required parameters
         let key = "key=\(apiKey)"
@@ -59,13 +73,7 @@ class GoogleSearch: NSObject {
         }
         
         print(searchString)
-        
-        var establishmentsArray: [EstablishmentsObj]?
-        retrieveData(htmlString: searchString) { (establishments) in
-            establishmentsArray = establishments
-        }
-        
-        return establishmentsArray!
+        return searchString
     }
     
     func retrieveData(htmlString: String, completion: @escaping ([EstablishmentsObj]) -> ()) {
@@ -86,14 +94,18 @@ class GoogleSearch: NSObject {
                     if let name = result["name"] as? String,
                     let address = result["vicinity"] as? String,
                     let rating = result["rating"] as? Double,
-                    let pricing = result["price_level"] as? Int {
+                    let pricing = result["price_level"] as? Int,
+                    let placeID = result["place_id"] as? String {
                         
                         if let geometry = result["geometry"] as? [String: AnyObject], let location = geometry["location"] as? [String: AnyObject] {
                             
                             if let latitude = location["lat"] as? Double,
                             let longitude = location["lng"] as? Double {
-                                let establishment = EstablishmentsObj(name: name, address: address, rating: rating, priceTier: pricing, latitude: latitude, longitude: longitude)
+                                let establishment = EstablishmentsObj(name: name, address: address, rating: rating, priceTier: pricing, latitude: latitude, longitude: longitude, placeID: placeID)
                                 establishmentsArray.append(establishment)
+                                print(name)
+                                print(placeID)
+                                
                             }
                         }
                     }

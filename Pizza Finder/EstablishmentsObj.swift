@@ -6,7 +6,8 @@
 //  Copyright © 2017 DLEE. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CoreLocation
 
 class EstablishmentsObj: NSObject {
 
@@ -16,14 +17,23 @@ class EstablishmentsObj: NSObject {
     var priceTier: Int?
     var latitude: Double?
     var longitude: Double?
+    var placeID: String?
+    var coordinate: CLLocationCoordinate2D?
     
-    init(name: String, address: String, rating: Double, priceTier: Int, latitude: Double, longitude: Double) {
+    init(name: String, address: String, rating: Double, priceTier: Int, latitude: Double, longitude: Double, placeID: String) {
         self.name = name
         self.address = address
         self.rating = rating
         self.priceTier = priceTier
         self.latitude = latitude
         self.longitude = longitude
+        self.placeID = placeID        
+        self.coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude))
     }
-    
+}
+
+struct ChoicesObj {
+    var type: String
+    var imageName: String
+    var backgroundColor: UIColor
 }

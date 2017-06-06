@@ -36,5 +36,9 @@
 	<string>Show your location on the map</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Show your location on the map</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Renogare.ttf</string>
+	</array>
 </dict>
 </plist>
