@@ -12,7 +12,7 @@ class ChoicesCell: BaseCell {
     
     let text: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "futura", size: 20)
+        label.font = fontReno?.withSize(40)
         label.textAlignment = .center
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +28,7 @@ class ChoicesCell: BaseCell {
     override func setUpCell() {
         self.addSubview(text)
         text.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
-        text.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8).isActive = true
+        text.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.85).isActive = true
         text.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         text.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }

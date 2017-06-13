@@ -18,6 +18,14 @@ class MapViewVC: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        mapView.mapViewVC = self
+        mapView.setUpMap(currentPosition: self.currentPlace!, assortedPlaces: self.assortedPlaces!, showsCurrentPositionBtn: true)
+        mapView.frame = self.view.bounds
+        self.view.addSubview(mapView)
+        requestAuth()
+    }
+    
     var mapView = MapView()
     
     var zoomLevel: Float = 15
@@ -25,18 +33,11 @@ class MapViewVC: UIViewController {
     var currentPlace: EstablishmentsObj? {
         didSet { mapView.currentPlace = self.currentPlace }
     }
-    var pizzaPlace: EstablishmentsObj? {
-        didSet { mapView.pizzaPlace = self.pizzaPlace }
+    var selectedPlace: EstablishmentsObj? {
+        didSet { mapView.selectedPlace = self.selectedPlace }
     }
-    var directions: [WayPoint]? {
-        didSet {
-            mapView.directions = self.directions
-            mapView.setUpMap(currentPosition: self.currentPlace!, pizzaPlace: self.pizzaPlace!, showsCurrentPositionBtn: true)
-            mapView.traceDirection(wayPoints: self.directions!)
-            mapView.frame = self.view.bounds
-            self.view.addSubview(mapView)
-            requestAuth()
-        }
+    var assortedPlaces: [EstablishmentsObj]? {
+        didSet { mapView.assortedPlaces = self.assortedPlaces }
     }
     
     var marker: GMSMarker?

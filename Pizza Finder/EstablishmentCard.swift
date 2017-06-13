@@ -8,93 +8,139 @@
 
 import UIKit
 
+extension UILabel {
+    func genericLabel(fontSize: CGFloat, fontColor: UIColor, alignment: NSTextAlignment) {
+        self.font = fontReno?.withSize(fontSize)
+        self.textAlignment = alignment
+        self.textColor = fontColor
+    }
+}
+
 class EstablishmentCard: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpCard()
+        
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
+        
+        
     }
+    
+    var cardHeight: CGFloat?
+    var cardWidth: CGFloat?
     
     var cardCenter: CGPoint?
     var touchPoint: CGPoint?
+    var superTouchPoint: CGPoint?
     var xDifference: CGFloat?
     var yDifference: CGFloat?
-    var cardWidth: CGFloat?
     
-    let cardSpeed: Double = 0.25
+    let cardSpeed: Double = 0.2
     let edgeTarget: CGFloat = 0.25
+    let desiredRotationAngle: CGFloat = 30
+    let verticalSwing: CGFloat = 0.2
+    let photoSizeMultiplier: CGFloat = 0.9
     
     var underLyingCard: EstablishmentCard?
     var establishmentChoicesVC: EstablishmentChoicesVC?
     
     func setUpCard() {
-        self.layer.cornerRadius = 10
-        self.clipsToBounds = true
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        cardCenter = self.center
-        if let touch = touches.first {
-            touchPoint = touch.location(in: self)
-        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            xDifference = touch.location(in: self).x - touchPoint!.x
-            yDifference = touch.location(in: self).y - touchPoint!.y
+        self.addSubview(photo)
+        photo.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: photoSizeMultiplier).isActive = true
+        photo.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: photoSizeMultiplier).isActive = true
+        photo.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        photo.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        
+        self.addSubview(name)
+        name.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.1).isActive = true
+        name.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.85).isActive = true
+        name.topAnchor.constraint(equalTo: photo.bottomAnchor, constant: 10).isActive = true
+        name.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        
+        self.addSubview(street)
+        street.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.1).isActive = true
+        street.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.85).isActive = true
+        street.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 0).isActive = true
+        street.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        
+        for x in 0...4 {
+            let priceImage: UIImageView = {
+                let image = UIImageView()
+                image.contentMode = .scaleAspectFit
+                image.translatesAutoresizingMaskIntoConstraints = false
+                return image
+            }()
             
-            if touch.location(in: self.establishmentChoicesVC?.view).x > ((self.establishmentChoicesVC?.view.frame.width)! * (1-edgeTarget)) {
-                self.alpha = ((self.establishmentChoicesVC?.view.frame.width)! * (1-edgeTarget)) / touch.location(in: self.establishmentChoicesVC?.view).x
-            } else {
-                self.alpha = touch.location(in: self.establishmentChoicesVC?.view).x / ((self.establishmentChoicesVC?.view.frame.width)! * edgeTarget)
+            self.addSubview(priceImage)
+            priceImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
+            priceImage.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
+            priceImage.topAnchor.constraint(equalTo: street.bottomAnchor, constant: 10).isActive = true
+            let xValue = ((cardWidth! * 0.5) / 2.0) + ((cardWidth! * 0.1) * CGFloat(x))
+            print(xValue)
+            priceImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: xValue).isActive = true
+            
+            priceImage.image = x <= self.establishment.priceTier! ? UIImage(named: "priceFilled") : UIImage(named: "priceUnfilled")
+        }
+        
+        addTapGesture()
+    }
+    
+    let googleSearch = GoogleSearch()
+    var establishment: EstablishmentsObj! {
+        didSet {
+            name.text = self.establishment.name
+            street.text = self.establishment.address
+            rating.text = "\(self.establishment.rating)"
+            googleSearch.downloadDirections(origin: currentLocation.coordinate!, destination: establishment.coordinate!, TravelMode: .walking) { (directions) in
+                self.directions = directions
             }
-        }
-        
-        self.center = CGPoint(x: self.center.x + xDifference!, y: self.center.y + yDifference!)
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        guard let lastTouch = touches.first?.location(in: self.superview) else { return }
-        
-        if lastTouch.x > ((self.establishmentChoicesVC?.view.frame.width)! * (1-edgeTarget)) {
-            moveOffScreen(directionIsRight: true)
-            
-        } else if lastTouch.x < ((self.establishmentChoicesVC?.view.frame.width)! * edgeTarget) {
-            moveOffScreen(directionIsRight: false)
-        } else {
-            UIView.animate(withDuration: cardSpeed, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: { 
-                self.center = self.cardCenter!
-            }, completion: nil)
+            setUpCard()
         }
     }
     
-    func moveOffScreen(directionIsRight: Bool) {
-        if directionIsRight {
-            UIView.animate(withDuration: cardSpeed, animations: {
-                self.center = CGPoint(x: self.center.x + ((self.establishmentChoicesVC?.view.frame.width)! * 0.25) + (self.cardWidth! * 0.5), y: self.center.y)
-            }, completion: { _ in
-                self.popNextCard()
-            })
-        } else {
-            UIView.animate(withDuration: cardSpeed, animations: {
-                self.center = CGPoint(x: self.center.x - ((self.establishmentChoicesVC?.view.frame.width)! * 0.25) - (self.cardWidth! * 0.5), y: self.center.y)
-            }, completion: { _ in
-                self.popNextCard()
-            })
-        }
-    }
+    var currentLocation: EstablishmentsObj!
     
-    func popNextCard() {
-        self.removeFromSuperview()
-        self.establishmentChoicesVC?.resizeNextCard()
-        self.establishmentChoicesVC?.dismissView()
-    }
+    var directions: [WayPoint]?
     
-    func setCardRotation() {
-        // set card rotation
-    }
+    lazy var photo: UIImageView = {
+        let image = UIImageView()
+        image.layer.cornerRadius = self.cardWidth! * 0.3 / 2
+        image.pullRestaurantPhoto(establishment: self.establishment)
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        image.backgroundColor = .black
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    lazy var name: UILabel = {
+        let label = UILabel()
+        label.genericLabel(fontSize: 15, fontColor: .black, alignment: .center)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var street: UILabel = {
+        let label = UILabel()
+        label.genericLabel(fontSize: 15, fontColor: .blue, alignment: .center)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var price: UILabel = {
+        let label = UILabel()
+        label.genericLabel(fontSize: 15, fontColor: .blue, alignment: .center)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var rating: UILabel = {
+        let label = UILabel()
+        label.genericLabel(fontSize: 15, fontColor: .blue, alignment: .center)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

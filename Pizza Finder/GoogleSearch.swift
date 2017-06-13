@@ -29,19 +29,27 @@ struct WayPoint {
     var direction: String
 }
 
+extension UIImageView {
+    func pullRestaurantPhoto(establishment: EstablishmentsObj) {
+        let urlString = GoogleSearch().googleEstablishmentPhotoSearchString(establishment: establishment, maxWidth: 280)
+        let url = URL(string: urlString)
+        let downloadedImage = try? UIImage(data: Data(contentsOf: url!))
+        self.image = downloadedImage!
+    }
+}
+
 class GoogleSearch: NSObject {
 
     let baseSearchString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
     let baseDirectionsString = "https://maps.googleapis.com/maps/api/directions/json?"
+    let basePhotosString = "https://maps.googleapis.com/maps/api/place/photo?"
     let nycLatitude = 40.730610
     let nycLongitude = -73.935242
     let nycLatitude2 = 40.735345
     let nycLongitude2 = -73.9356295
     let apiKey = "AIzaSyCy5RT5v2qUzOGNirGVdBDnGIaV2ix9yJo"
     
-
-    
-    func executeSearch(metersRadius: Double, isRankedByClosest: Bool, isRankedByType: RankType, latitude: Double, longitude: Double, keyword: String, openNow: Bool, type: String) -> String {
+    func googleSearchString(metersRadius: Double, isRankedByClosest: Bool, isRankedByType: RankType, latitude: Double, longitude: Double, keyword: String, openNow: Bool, type: String) -> String {
         
         //Required parameters
         let key = "key=\(apiKey)"
@@ -76,10 +84,25 @@ class GoogleSearch: NSObject {
         return searchString
     }
     
+    func googleEstablishmentPhotoSearchString(establishment: EstablishmentsObj, maxWidth: Int) -> String {
+        //Required parameters
+        let key = "key=\(apiKey)"
+        var searchString = basePhotosString + key
+        let width = "maxwidth=\(maxWidth)"
+        let photoRef = "photoreference=\(establishment.photoRef!)"
+        
+        searchString.append("&")
+        searchString.append(width)
+        searchString.append("&")
+        searchString.append(photoRef)
+        
+        return searchString
+    }
+    
     func retrieveData(htmlString: String, completion: @escaping ([EstablishmentsObj]) -> ()) {
         
         var establishmentsArray = [EstablishmentsObj]()
-        
+            
         let url = URL(string: htmlString)
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if error != nil {
@@ -95,13 +118,15 @@ class GoogleSearch: NSObject {
                     let address = result["vicinity"] as? String,
                     let rating = result["rating"] as? Double,
                     let pricing = result["price_level"] as? Int,
-                    let placeID = result["place_id"] as? String {
+                    let placeID = result["place_id"] as? String,
+                    let photoRef = result["photos"] as? [AnyObject],
+                    let photoReference = photoRef.first?["photo_reference"] as? String {
                         
                         if let geometry = result["geometry"] as? [String: AnyObject], let location = geometry["location"] as? [String: AnyObject] {
                             
                             if let latitude = location["lat"] as? Double,
                             let longitude = location["lng"] as? Double {
-                                let establishment = EstablishmentsObj(name: name, address: address, rating: rating, priceTier: pricing, latitude: latitude, longitude: longitude, placeID: placeID)
+                                let establishment = EstablishmentsObj(name: name, address: address, rating: rating, priceTier: pricing, latitude: latitude, longitude: longitude, placeID: placeID, photoRef: photoReference)
                                 establishmentsArray.append(establishment)
                                 print(name)
                                 print(placeID)

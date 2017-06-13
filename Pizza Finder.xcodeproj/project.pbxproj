@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		29EEF40FD95773EA3877D607 /* Pods_Pizza_Finder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FBEC74A053552A0B43C71D /* Pods_Pizza_Finder.framework */; };
 		700417661EDB040700D2B72A /* MapViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700417651EDB040700D2B72A /* MapViewVC.swift */; };
+		7021ED811EE893D0003583EE /* ChoicesPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7021ED801EE893D0003583EE /* ChoicesPickerView.swift */; };
+		7021ED831EE8A6E0003583EE /* ChoicesPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7021ED821EE8A6E0003583EE /* ChoicesPickerCell.swift */; };
+		703140071EE9B98000DA8253 /* EstablishmentCardTouchFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703140061EE9B98000DA8253 /* EstablishmentCardTouchFunctions.swift */; };
 		7084FEB31ED869EA00F68A5E /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7084FEB21ED869EA00F68A5E /* SearchVC.swift */; };
-		7084FEB51ED8714B00F68A5E /* ResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7084FEB41ED8714B00F68A5E /* ResultsVC.swift */; };
 		7084FEB71ED882E600F68A5E /* GoogleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7084FEB61ED882E600F68A5E /* GoogleSearch.swift */; };
 		7084FEB91ED8B21500F68A5E /* EstablishmentsObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7084FEB81ED8B21500F68A5E /* EstablishmentsObj.swift */; };
 		70BC307E1EE31751005C1CE5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BC307D1EE31751005C1CE5 /* MapView.swift */; };
@@ -25,7 +27,6 @@
 		70CED5E51EE07F3000C7284C /* HomescreenCollectionV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5E41EE07F3000C7284C /* HomescreenCollectionV.swift */; };
 		70CED5EA1EE0AFD800C7284C /* HomescreenDataFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5E91EE0AFD800C7284C /* HomescreenDataFunctions.swift */; };
 		70CED5EE1EE0BD5800C7284C /* EstablishmentChoicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5ED1EE0BD5800C7284C /* EstablishmentChoicesVC.swift */; };
-		70CED5F01EE1872700C7284C /* EstablishmentChoicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5EF1EE1872700C7284C /* EstablishmentChoicesCell.swift */; };
 		70EC2F5D1ED77EF5009D0803 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EC2F5C1ED77EF5009D0803 /* AppDelegate.swift */; };
 		70EC2F5F1ED77EF5009D0803 /* HomescreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EC2F5E1ED77EF5009D0803 /* HomescreenVC.swift */; };
 		70EC2F651ED77EF5009D0803 /* Pizza_Finder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70EC2F631ED77EF5009D0803 /* Pizza_Finder.xcdatamodeld */; };
@@ -36,8 +37,10 @@
 /* Begin PBXFileReference section */
 		0DE152056E048FB2428EB0D4 /* Pods-Pizza Finder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pizza Finder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pizza Finder/Pods-Pizza Finder.debug.xcconfig"; sourceTree = "<group>"; };
 		700417651EDB040700D2B72A /* MapViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewVC.swift; sourceTree = "<group>"; };
+		7021ED801EE893D0003583EE /* ChoicesPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoicesPickerView.swift; sourceTree = "<group>"; };
+		7021ED821EE8A6E0003583EE /* ChoicesPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoicesPickerCell.swift; sourceTree = "<group>"; };
+		703140061EE9B98000DA8253 /* EstablishmentCardTouchFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstablishmentCardTouchFunctions.swift; sourceTree = "<group>"; };
 		7084FEB21ED869EA00F68A5E /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
-		7084FEB41ED8714B00F68A5E /* ResultsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsVC.swift; sourceTree = "<group>"; };
 		7084FEB61ED882E600F68A5E /* GoogleSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleSearch.swift; sourceTree = "<group>"; };
 		7084FEB81ED8B21500F68A5E /* EstablishmentsObj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstablishmentsObj.swift; sourceTree = "<group>"; };
 		70BC307D1EE31751005C1CE5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -52,7 +55,6 @@
 		70CED5E41EE07F3000C7284C /* HomescreenCollectionV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomescreenCollectionV.swift; sourceTree = "<group>"; };
 		70CED5E91EE0AFD800C7284C /* HomescreenDataFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomescreenDataFunctions.swift; sourceTree = "<group>"; };
 		70CED5ED1EE0BD5800C7284C /* EstablishmentChoicesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstablishmentChoicesVC.swift; sourceTree = "<group>"; };
-		70CED5EF1EE1872700C7284C /* EstablishmentChoicesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstablishmentChoicesCell.swift; sourceTree = "<group>"; };
 		70EC2F591ED77EF5009D0803 /* Pizza Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pizza Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EC2F5C1ED77EF5009D0803 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70EC2F5E1ED77EF5009D0803 /* HomescreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVC.swift; sourceTree = "<group>"; };
@@ -99,6 +101,8 @@
 				70CED5E91EE0AFD800C7284C /* HomescreenDataFunctions.swift */,
 				70CED5E41EE07F3000C7284C /* HomescreenCollectionV.swift */,
 				70CED5E21EE0715800C7284C /* ChoicesCell.swift */,
+				7021ED801EE893D0003583EE /* ChoicesPickerView.swift */,
+				7021ED821EE8A6E0003583EE /* ChoicesPickerCell.swift */,
 			);
 			name = Homescreen;
 			sourceTree = "<group>";
@@ -128,7 +132,7 @@
 			children = (
 				70CED5ED1EE0BD5800C7284C /* EstablishmentChoicesVC.swift */,
 				70BC30831EE46CF9005C1CE5 /* EstablishmentCard.swift */,
-				70CED5EF1EE1872700C7284C /* EstablishmentChoicesCell.swift */,
+				703140061EE9B98000DA8253 /* EstablishmentCardTouchFunctions.swift */,
 			);
 			name = EstablishmentOptions;
 			sourceTree = "<group>";
@@ -163,7 +167,6 @@
 				70CED5E61EE0AEEF00C7284C /* Homescreen */,
 				70CED5F11EE1874C00C7284C /* EstablishmentOptions */,
 				70CED5E71EE0AEFC00C7284C /* Mapview */,
-				7084FEB41ED8714B00F68A5E /* ResultsVC.swift */,
 				7084FEB21ED869EA00F68A5E /* SearchVC.swift */,
 				70EC2F661ED77EF5009D0803 /* Assets.xcassets */,
 				70EC2F681ED77EF5009D0803 /* LaunchScreen.storyboard */,
@@ -311,6 +314,7 @@
 				70BC307E1EE31751005C1CE5 /* MapView.swift in Sources */,
 				7084FEB71ED882E600F68A5E /* GoogleSearch.swift in Sources */,
 				70BC30881EE72A1B005C1CE5 /* SplashScreenVC.swift in Sources */,
+				703140071EE9B98000DA8253 /* EstablishmentCardTouchFunctions.swift in Sources */,
 				7084FEB31ED869EA00F68A5E /* SearchVC.swift in Sources */,
 				70EC2F5F1ED77EF5009D0803 /* HomescreenVC.swift in Sources */,
 				70CED5E11EDDF40800C7284C /* GoogleDirections.swift in Sources */,
@@ -318,13 +322,13 @@
 				70CED5DF1EDDA4B200C7284C /* MapViewLocationDelegates.swift in Sources */,
 				70CED5EA1EE0AFD800C7284C /* HomescreenDataFunctions.swift in Sources */,
 				70BC30841EE46CF9005C1CE5 /* EstablishmentCard.swift in Sources */,
+				7021ED811EE893D0003583EE /* ChoicesPickerView.swift in Sources */,
 				70EC2F5D1ED77EF5009D0803 /* AppDelegate.swift in Sources */,
 				70BC30821EE46566005C1CE5 /* Utilities.swift in Sources */,
+				7021ED831EE8A6E0003583EE /* ChoicesPickerCell.swift in Sources */,
 				70CED5EE1EE0BD5800C7284C /* EstablishmentChoicesVC.swift in Sources */,
 				70CED5E51EE07F3000C7284C /* HomescreenCollectionV.swift in Sources */,
 				70CED5E31EE0715800C7284C /* ChoicesCell.swift in Sources */,
-				7084FEB51ED8714B00F68A5E /* ResultsVC.swift in Sources */,
-				70CED5F01EE1872700C7284C /* EstablishmentChoicesCell.swift in Sources */,
 				70EC2F651ED77EF5009D0803 /* Pizza_Finder.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

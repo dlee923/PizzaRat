@@ -35,9 +35,9 @@ extension HomescreenVC: UICollectionViewDelegateFlowLayout, UICollectionViewData
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: choicesCellID, for: indexPath) as? ChoicesCell {
             cell.menuChoice = choices[indexPath.item]
             if nightMode {
-                cell.backgroundColor = UIColor(white: 0, alpha: 0.9)
+                
             } else {
-                cell.backgroundColor = UIColor(white: 1, alpha: 0.2)
+                
             }
             return cell
         } else {
@@ -46,16 +46,15 @@ extension HomescreenVC: UICollectionViewDelegateFlowLayout, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let establishmentChoicesVC = EstablishmentChoicesVC()
-        present(establishmentChoicesVC, animated: true, completion: nil)
-//        pullNearbyRestaurants(food: choices[indexPath.item].type)
+        pullNearbyRestaurants(food: choices[indexPath.item].type)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let page = Int(targetContentOffset.pointee.x / (scrollView.contentSize.width / CGFloat(foodChoices.numberOfItems(inSection: 0))))
         print(page)
         UIView.animate(withDuration: durationColorBackground) {
-            self.foodChoices.backgroundColor = self.choices[page].backgroundColor
+            self.foodChoices.backgroundColor = self.choices[page].backgroundColor.withAlphaComponent(self.backgroundColorAlpha)
+            self.foodChoicesPicker.selectRow(page, inComponent: 0, animated: true)
         }
     }
 }

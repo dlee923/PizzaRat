@@ -21,8 +21,14 @@ class MapView: GMSMapView {
     var bearing: Double = 0
     
     var currentPlace: EstablishmentsObj?
-    var pizzaPlace: EstablishmentsObj?
+    var selectedPlace: EstablishmentsObj?
+    var assortedPlaces: [EstablishmentsObj]?
     var directions: [WayPoint]?
+    
+    var marker: GMSMarker?
+    var mapViewVC: MapViewVC?
+    
+    let buttonSize: CGFloat = 30
     
     var iconSize: CGFloat = 50
     lazy var pizzaIcon: UIImageView = {
@@ -39,7 +45,7 @@ class MapView: GMSMapView {
         return rat
     }()
     
-    func setUpMap(currentPosition: EstablishmentsObj, pizzaPlace: EstablishmentsObj, showsCurrentPositionBtn: Bool) {
+    func setUpMap(currentPosition: EstablishmentsObj, assortedPlaces: [EstablishmentsObj], showsCurrentPositionBtn: Bool) {
         let latitude = CLLocationDegrees(currentPosition.latitude!)
         let longitude = CLLocationDegrees(currentPosition.longitude!)
         let camera = GMSCameraPosition.camera(withTarget: CLLocationCoordinate2DMake(latitude, longitude), zoom: zoomLevel, bearing: bearing, viewingAngle: viewingAngle)
@@ -49,22 +55,22 @@ class MapView: GMSMapView {
         self.settings.myLocationButton = showsCurrentPositionBtn
         self.settings.tiltGestures = true
         
-        pinMapLocation(currentPlace: currentPosition, pizzaPlace: pizzaPlace)
+        pinMapLocation(currentPlace: currentPosition, assortedPlaces: assortedPlaces)
+        
+        setUpBackButton(buttonSize: buttonSize, function: #selector(returnToEstablishmentsVC), view: self, target: self)
     }
     
-    var marker: GMSMarker?
+    func returnToEstablishmentsVC() {
+        mapViewVC?.dismiss(animated: true, completion: nil)
+    }
     
-    func pinMapLocation(currentPlace: EstablishmentsObj, pizzaPlace: EstablishmentsObj) {
+    func pinMapLocation(currentPlace: EstablishmentsObj, assortedPlaces: [EstablishmentsObj]) {
         self.clear()
         
-        if currentPlace != nil && pizzaPlace != nil {
+        if currentPlace != nil && assortedPlaces != nil {
             let currentPlaceLat = CLLocationDegrees(exactly: currentPlace.latitude!)
             let currentPlaceLong = CLLocationDegrees(exactly: currentPlace.longitude!)
             let currentPlaceCoordinate = CLLocationCoordinate2DMake(currentPlaceLat!, currentPlaceLong!)
-            
-            let pizzaLat = CLLocationDegrees(exactly: pizzaPlace.latitude!)
-            let pizzaLong = CLLocationDegrees(exactly: pizzaPlace.longitude!)
-            let pizzaCoordinate = CLLocationCoordinate2DMake(pizzaLat!, pizzaLong!)
             
             marker = GMSMarker(position: currentPlaceCoordinate)
             marker?.iconView = ratIcon
@@ -72,11 +78,17 @@ class MapView: GMSMapView {
             marker?.title = currentPlace.name
             marker?.map = self
             
-            let pizzaMarker = GMSMarker(position: pizzaCoordinate)
-            pizzaMarker.iconView = pizzaIcon
-            pizzaMarker.snippet = pizzaPlace.address
-            pizzaMarker.title = pizzaPlace.name
-            pizzaMarker.map = self
+            for eachPlace in assortedPlaces {
+                let placeLat = CLLocationDegrees(exactly: eachPlace.latitude!)
+                let placeLong = CLLocationDegrees(exactly: eachPlace.longitude!)
+                let placeCoordinate = CLLocationCoordinate2DMake(placeLat!, placeLong!)
+                
+                let placeMarker = GMSMarker(position: placeCoordinate)
+                placeMarker.iconView = pizzaIcon
+                placeMarker.snippet = eachPlace.address
+                placeMarker.title = eachPlace.name
+                placeMarker.map = self
+            }
         }
     }
     

@@ -12,17 +12,9 @@ import GoogleMaps
 extension HomescreenVC {
 
     func pullNearbyRestaurants(food: String) {
-        let urlString = googleSearch.executeSearch(metersRadius: 5000, isRankedByClosest: true, isRankedByType: .distance, latitude: googleSearch.nycLatitude, longitude: googleSearch.nycLongitude, keyword: food, openNow: true, type: "Restaurant")
+        let urlString = googleSearch.googleSearchString(metersRadius: 5000, isRankedByClosest: true, isRankedByType: .distance, latitude: googleSearch.nycLatitude, longitude: googleSearch.nycLongitude, keyword: food.replacingOccurrences(of: " ", with: "%20"), openNow: true, type: "Restaurant")
         googleSearch.retrieveData(htmlString: urlString) { (restaurants) in
             self.restaurants = restaurants
-        }
-    }
-    
-    func downloadDirections(destination: CLLocationCoordinate2D) {
-        if let origin = currentPlace?.coordinate {
-            googleSearch.downloadDirections(origin: origin, destination: destination, TravelMode: .walking) { wayPointsArray in
-                self.directions = wayPointsArray
-            }
         }
     }
     
@@ -51,7 +43,7 @@ extension HomescreenVC {
                 print("Current Place Latitude Coordinate \(String(describing: latitude))")
                 print("Current Place Longitude Coordinate \(String(describing: longitude))")
                 
-                self.currentPlace = EstablishmentsObj(name: name, address: address, rating: rating, priceTier: priceTier, latitude: latitude, longitude: longitude, placeID: placeID)
+                self.currentPlace = EstablishmentsObj(name: name, address: address, rating: rating, priceTier: priceTier, latitude: latitude, longitude: longitude, placeID: placeID, photoRef: "")
             }
         }
     }

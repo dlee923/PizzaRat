@@ -25,14 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-//        let rootView = HomescreenVC()
+        let rootView = HomescreenVC()
 //        window?.rootViewController = UINavigationController(rootViewController: rootView)
         
-        let rootView = SplashScreenVC()
         window?.rootViewController = rootView
-        
-
-        
+//        rootView.instantiateSplashScreen()
         
         return true
     }
