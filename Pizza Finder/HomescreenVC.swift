@@ -21,7 +21,8 @@ class HomescreenVC: UIViewController{
         setUpPickerView()
         
         // Find current coordinates
-        findCurrentPlace()
+//        findCurrentPlace()
+        requestPermission()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +94,7 @@ class HomescreenVC: UIViewController{
                    ChoicesObj(type: "Tacos", imageName: "tacoImg", backgroundColor: .white, optionImageName: "optionTaco")]
     
     let googleSearch = GoogleSearch()
+    let locationManager = CLLocationManager()
     
     var currentPlace: EstablishmentsObj? {
         didSet { }
@@ -103,16 +105,16 @@ class HomescreenVC: UIViewController{
                 eachRestaurant.downloadDirections(origin: (currentPlace?.coordinate)!, destination: eachRestaurant.coordinate!)
             }
             // should bring up map with restaurants visible
-            let presentingMapView = MapViewVC()            
-            presentingMapView.currentPlace = self.currentPlace
+            presentingMapView?.currentPlace = self.currentPlace
             if let restaurants = (self.restaurants?.prefix(numberOfRestaurants)) {
                 let restaurantOptions = Array(restaurants)
-                presentingMapView.selectedPlace = restaurantOptions.last
-                presentingMapView.assortedPlaces = restaurantOptions
-            }
-            fadeOutTransition(viewControllerToPresent: presentingMapView, viewControllerPresenting: self)
+                presentingMapView?.selectedPlace = restaurantOptions.first
+                presentingMapView?.assortedPlaces = restaurantOptions
+            }            
         }
     }
+    
+    var presentingMapView: MapViewVC?
     
     let placesClient = GMSPlacesClient.shared()
     

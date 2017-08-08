@@ -9,16 +9,41 @@
 import Foundation
 import GoogleMaps
 
-extension HomescreenVC {
+extension HomescreenVC: CLLocationManagerDelegate {
 
     func pullNearbyRestaurants(food: String) {
-        let urlString = googleSearch.googleSearchString(metersRadius: 5000, isRankedByClosest: true, isRankedByType: .distance, latitude: googleSearch.nycLatitude, longitude: googleSearch.nycLongitude, keyword: food.replacingOccurrences(of: " ", with: "%20"), openNow: true, type: "Restaurant")
-        googleSearch.retrieveData(htmlString: urlString) { (restaurants) in
+        
+        var urlString: String?
+        
+        if let lat = currentPlace?.latitude, let long = currentPlace?.longitude {
+            urlString = googleSearch.googleSearchString(metersRadius: 5000, isRankedByClosest: true, isRankedByType: .distance, latitude: lat, longitude: long, keyword: food.replacingOccurrences(of: " ", with: "%20"), openNow: true, type: "Restaurant")
+        }
+        
+        googleSearch.retrieveData(htmlString: urlString!) { (restaurants) in
             self.restaurants = restaurants
         }
     }
     
-    func findCurrentPlace() {
+    func requestPermission() {
+        locationManager.requestAlwaysAuthorization()
+        locationManager.delegate = self
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .restricted : print("Location access was restricted")
+        case .denied : print("Location access was denied")
+        case .notDetermined : print("Location access was not determined")
+        case .authorizedWhenInUse :
+            findCurrentPlace()
+            print("Location access was authorized when in use")
+        case .authorizedAlways :
+            findCurrentPlace()
+            print("Location access was authorized always")
+        }
+    }
+    
+    func findCurrentPlace() {        
         placesClient.currentPlace { (places, err) in
             if err != nil {
                 let error = err?.localizedDescription

@@ -26,7 +26,8 @@
 		70CED5E31EE0715800C7284C /* ChoicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5E21EE0715800C7284C /* ChoicesCell.swift */; };
 		70CED5E51EE07F3000C7284C /* HomescreenCollectionV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5E41EE07F3000C7284C /* HomescreenCollectionV.swift */; };
 		70CED5EA1EE0AFD800C7284C /* HomescreenDataFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5E91EE0AFD800C7284C /* HomescreenDataFunctions.swift */; };
-		70CED5EE1EE0BD5800C7284C /* EstablishmentChoicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CED5ED1EE0BD5800C7284C /* EstablishmentChoicesVC.swift */; };
+		70DAD79D1EF1D431000683C6 /* EstablishmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DAD79C1EF1D431000683C6 /* EstablishmentsView.swift */; };
+		70DAD79F1EF47254000683C6 /* SeeAllEstablishments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DAD79E1EF47254000683C6 /* SeeAllEstablishments.swift */; };
 		70EC2F5D1ED77EF5009D0803 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EC2F5C1ED77EF5009D0803 /* AppDelegate.swift */; };
 		70EC2F5F1ED77EF5009D0803 /* HomescreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EC2F5E1ED77EF5009D0803 /* HomescreenVC.swift */; };
 		70EC2F651ED77EF5009D0803 /* Pizza_Finder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70EC2F631ED77EF5009D0803 /* Pizza_Finder.xcdatamodeld */; };
@@ -54,7 +55,8 @@
 		70CED5E21EE0715800C7284C /* ChoicesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoicesCell.swift; sourceTree = "<group>"; };
 		70CED5E41EE07F3000C7284C /* HomescreenCollectionV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomescreenCollectionV.swift; sourceTree = "<group>"; };
 		70CED5E91EE0AFD800C7284C /* HomescreenDataFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomescreenDataFunctions.swift; sourceTree = "<group>"; };
-		70CED5ED1EE0BD5800C7284C /* EstablishmentChoicesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstablishmentChoicesVC.swift; sourceTree = "<group>"; };
+		70DAD79C1EF1D431000683C6 /* EstablishmentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstablishmentsView.swift; sourceTree = "<group>"; };
+		70DAD79E1EF47254000683C6 /* SeeAllEstablishments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeAllEstablishments.swift; sourceTree = "<group>"; };
 		70EC2F591ED77EF5009D0803 /* Pizza Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pizza Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EC2F5C1ED77EF5009D0803 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70EC2F5E1ED77EF5009D0803 /* HomescreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVC.swift; sourceTree = "<group>"; };
@@ -130,9 +132,10 @@
 		70CED5F11EE1874C00C7284C /* EstablishmentOptions */ = {
 			isa = PBXGroup;
 			children = (
-				70CED5ED1EE0BD5800C7284C /* EstablishmentChoicesVC.swift */,
+				70DAD79C1EF1D431000683C6 /* EstablishmentsView.swift */,
 				70BC30831EE46CF9005C1CE5 /* EstablishmentCard.swift */,
 				703140061EE9B98000DA8253 /* EstablishmentCardTouchFunctions.swift */,
+				70DAD79E1EF47254000683C6 /* SeeAllEstablishments.swift */,
 			);
 			name = EstablishmentOptions;
 			sourceTree = "<group>";
@@ -165,8 +168,8 @@
 				70CED5E81EE0AF0F00C7284C /* Model */,
 				70BC30891EE7398F005C1CE5 /* SplashScreen */,
 				70CED5E61EE0AEEF00C7284C /* Homescreen */,
-				70CED5F11EE1874C00C7284C /* EstablishmentOptions */,
 				70CED5E71EE0AEFC00C7284C /* Mapview */,
+				70CED5F11EE1874C00C7284C /* EstablishmentOptions */,
 				7084FEB21ED869EA00F68A5E /* SearchVC.swift */,
 				70EC2F661ED77EF5009D0803 /* Assets.xcassets */,
 				70EC2F681ED77EF5009D0803 /* LaunchScreen.storyboard */,
@@ -318,15 +321,16 @@
 				7084FEB31ED869EA00F68A5E /* SearchVC.swift in Sources */,
 				70EC2F5F1ED77EF5009D0803 /* HomescreenVC.swift in Sources */,
 				70CED5E11EDDF40800C7284C /* GoogleDirections.swift in Sources */,
+				70DAD79F1EF47254000683C6 /* SeeAllEstablishments.swift in Sources */,
 				700417661EDB040700D2B72A /* MapViewVC.swift in Sources */,
 				70CED5DF1EDDA4B200C7284C /* MapViewLocationDelegates.swift in Sources */,
 				70CED5EA1EE0AFD800C7284C /* HomescreenDataFunctions.swift in Sources */,
 				70BC30841EE46CF9005C1CE5 /* EstablishmentCard.swift in Sources */,
+				70DAD79D1EF1D431000683C6 /* EstablishmentsView.swift in Sources */,
 				7021ED811EE893D0003583EE /* ChoicesPickerView.swift in Sources */,
 				70EC2F5D1ED77EF5009D0803 /* AppDelegate.swift in Sources */,
 				70BC30821EE46566005C1CE5 /* Utilities.swift in Sources */,
 				7021ED831EE8A6E0003583EE /* ChoicesPickerCell.swift in Sources */,
-				70CED5EE1EE0BD5800C7284C /* EstablishmentChoicesVC.swift in Sources */,
 				70CED5E51EE07F3000C7284C /* HomescreenCollectionV.swift in Sources */,
 				70CED5E31EE0715800C7284C /* ChoicesCell.swift in Sources */,
 				70EC2F651ED77EF5009D0803 /* Pizza_Finder.xcdatamodeld in Sources */,

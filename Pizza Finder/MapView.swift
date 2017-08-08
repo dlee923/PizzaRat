@@ -16,26 +16,22 @@ class MapView: GMSMapView {
     
     }
     
-    var zoomLevel: Float = 15
-    var viewingAngle: Double = 30
-    var bearing: Double = 0
-    
     var currentPlace: EstablishmentsObj?
     var selectedPlace: EstablishmentsObj?
-    var assortedPlaces: [EstablishmentsObj]?
-    var directions: [WayPoint]?
+    var assortedPlaces: [EstablishmentsObj]?    
     
     var marker: GMSMarker?
     var mapViewVC: MapViewVC?
     
     let buttonSize: CGFloat = 30
-    
     var iconSize: CGFloat = 50
-    lazy var pizzaIcon: UIImageView = {
-        let pizza = UIImageView()
-        pizza.image = UIImage(named: "Pizza")
-        pizza.frame.size = CGSize(width: self.iconSize, height: self.iconSize)
-        return pizza
+    let directionsPathThickness: CGFloat = 5
+    
+    lazy var foodIcon: UIImageView = {
+        let food = UIImageView()
+        food.image = UIImage(named: "Pizza")
+        food.frame.size = CGSize(width: self.iconSize, height: self.iconSize)
+        return food
     }()
     
     lazy var ratIcon: UIImageView = {
@@ -45,17 +41,14 @@ class MapView: GMSMapView {
         return rat
     }()
     
-    func setUpMap(currentPosition: EstablishmentsObj, assortedPlaces: [EstablishmentsObj], showsCurrentPositionBtn: Bool) {
-        let latitude = CLLocationDegrees(currentPosition.latitude!)
-        let longitude = CLLocationDegrees(currentPosition.longitude!)
-        let camera = GMSCameraPosition.camera(withTarget: CLLocationCoordinate2DMake(latitude, longitude), zoom: zoomLevel, bearing: bearing, viewingAngle: viewingAngle)
+    func setUpMap(currentPosition: EstablishmentsObj, assortedPlaces: [EstablishmentsObj], showsCurrentPositionBtn: Bool, foodType: String, zoom: Float, bearing: CLLocationDirection, viewingAngle: Double) {
+        
+        let camera = GMSCameraPosition.camera(withTarget: (selectedPlace?.coordinate)!, zoom: zoom, bearing: bearing, viewingAngle: viewingAngle)
         self.camera = camera
-//        GMSMapView.map(withFrame: self.bounds, camera: camera)
-//        self.isHidden = true
         self.settings.myLocationButton = showsCurrentPositionBtn
         self.settings.tiltGestures = true
         
-        pinMapLocation(currentPlace: currentPosition, assortedPlaces: assortedPlaces)
+        pinMapLocations(currentPlace: currentPosition, assortedPlaces: assortedPlaces, foodType: foodType)
         
         setUpBackButton(buttonSize: buttonSize, function: #selector(returnToEstablishmentsVC), view: self, target: self)
     }
@@ -64,7 +57,7 @@ class MapView: GMSMapView {
         mapViewVC?.dismiss(animated: true, completion: nil)
     }
     
-    func pinMapLocation(currentPlace: EstablishmentsObj, assortedPlaces: [EstablishmentsObj]) {
+    func pinMapLocations(currentPlace: EstablishmentsObj, assortedPlaces: [EstablishmentsObj], foodType: String) {
         self.clear()
         
         if currentPlace != nil && assortedPlaces != nil {
@@ -84,15 +77,21 @@ class MapView: GMSMapView {
                 let placeCoordinate = CLLocationCoordinate2DMake(placeLat!, placeLong!)
                 
                 let placeMarker = GMSMarker(position: placeCoordinate)
-                placeMarker.iconView = pizzaIcon
+                foodIcon.image = UIImage(named: foodType)
+                placeMarker.iconView = foodIcon
                 placeMarker.snippet = eachPlace.address
                 placeMarker.title = eachPlace.name
                 placeMarker.map = self
+                
+                eachPlace.mapMarker = placeMarker
             }
+            
+            self.selectedMarker = selectedPlace?.mapMarker
         }
     }
     
     func traceDirection(wayPoints: [WayPoint]) {
+        
         let path = GMSMutablePath()
         for point in wayPoints {
             path.addLatitude(point.startCoordinate.latitude, longitude: point.startCoordinate.longitude)
@@ -105,11 +104,21 @@ class MapView: GMSMapView {
         let directionsPath = GMSPolyline(path: path)
         
         let strokeColor = UIColor.purple
-        let strokeWidth: CGFloat = 5
+        let strokeWidth: CGFloat = directionsPathThickness
         
         directionsPath.strokeColor = strokeColor
         directionsPath.strokeWidth = strokeWidth
         directionsPath.map = self
+        
+        if let myLocation = currentPlace?.coordinate {
+            self.animate(toLocation: (wayPoints.first?.startCoordinate)!)
+            self.animate(toZoom: (mapViewVC?.directionsZoomLevel)!)
+            self.animate(toViewingAngle: (mapViewVC?.directionsViewingAngle)!)
+            let calculatedBearing = mapViewVC?.getBearingBetweenTwoPoints(location1: (wayPoints.first?.startCoordinate)!, location2: (wayPoints.first?.endCoordinate)!)
+            self.animate(toBearing: calculatedBearing!)
+        }
+        mapViewVC?.directions = wayPoints
+        mapViewVC?.canUpdate = true
     }
     
     required init?(coder aDecoder: NSCoder) {

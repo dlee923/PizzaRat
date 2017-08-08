@@ -47,6 +47,8 @@ extension HomescreenVC: UICollectionViewDelegateFlowLayout, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         pullNearbyRestaurants(food: choices[indexPath.item].type)
+        presentingMapView = MapViewVC()
+        fadeOutTransition(viewControllerToPresent: presentingMapView!, viewControllerPresenting: self)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {

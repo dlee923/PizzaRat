@@ -43,6 +43,7 @@ class SplashScreenVC: UIViewController {
     var videoPlayerContainer: AVPlayerLayer?
     
     let loopFadeSpeed = 0.25
+    let splashScreenAlpha: CGFloat = 0.7
     
     func setUpVideoPlayer() {
         guard let url = Bundle.main.url(forResource: "pizzaRat", withExtension: "mp4") else { return }
@@ -89,8 +90,6 @@ class SplashScreenVC: UIViewController {
             })
         })
     }
-    
-    let splashScreenAlpha: CGFloat = 0.7
     
     var appTitle: UILabel?
     

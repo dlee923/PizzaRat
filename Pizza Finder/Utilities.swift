@@ -94,14 +94,14 @@ func fadeOutTransition(viewControllerToPresent: UIViewController, viewController
         blackView.alpha = 0
         window.addSubview(blackView)
         
-        UIView.animate(withDuration: 0.35, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             blackView.alpha = 1
             print("blacking out")
         }, completion: { (_) in
             
             viewControllerPresenting.present(viewControllerToPresent, animated: false, completion: {
-                UIView.animate(withDuration: 0.35, animations: {
-                    blackView.alpha = 0.5
+                UIView.animate(withDuration: 0.3, animations: {
+                    blackView.alpha = 0.0
                 }, completion: { (_) in
                     blackView.removeFromSuperview()
                 })

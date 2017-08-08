@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import GoogleMaps
 
 class EstablishmentsObj: NSObject {
 
@@ -21,6 +22,7 @@ class EstablishmentsObj: NSObject {
     var coordinate: CLLocationCoordinate2D?
     var photoRef: String?
     var directions: [WayPoint]?
+    var mapMarker: GMSMarker?
     
     init(name: String, address: String, rating: Double, priceTier: Int, latitude: Double, longitude: Double, placeID: String, photoRef: String) {
         self.name = name

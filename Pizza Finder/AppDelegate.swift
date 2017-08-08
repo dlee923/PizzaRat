@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        window?.rootViewController = UINavigationController(rootViewController: rootView)
         
         window?.rootViewController = rootView
-//        rootView.instantiateSplashScreen()
+        rootView.instantiateSplashScreen()
         
         return true
     }
